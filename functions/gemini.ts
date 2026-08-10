@@ -1,27 +1,37 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: any): Promise<any> {
   try {
     if (req.method !== 'POST') {
-      return res.status(405).json({
-        error: 'Only POST requests are allowed',
-      });
+      return {
+        statusCode: 405,
+        body: JSON.stringify({
+          error: 'Only POST requests are allowed',
+        }),
+      };
     }
 
-    const prompt = req.body?.prompt;
+    const body = req.body;
+    const prompt = body?.prompt;
 
     if (!prompt || typeof prompt !== 'string') {
-      return res.status(400).json({
-        error: 'prompt is required',
-      });
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: 'prompt is required',
+        }),
+      };
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return res.status(500).json({
-        error: 'GEMINI_API_KEY is not configured',
-      });
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: 'GEMINI_API_KEY is not configured',
+        }),
+      };
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -33,14 +43,21 @@ export default async function handler(req: any, res: any) {
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    return res.status(200).json({
-      text,
-    });
-  } catch (error) {
-    console.error('Gemini error:', error);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        text,
+      }),
+    };
+  } catch (error: any) {
+    console.error('FULL GEMINI ERROR:', error);
 
-    return res.status(500).json({
-      error: 'Gemini request failed',
-    });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: 'Gemini request failed',
+        details: error?.message || String(error),
+      }),
+    };
   }
 }
