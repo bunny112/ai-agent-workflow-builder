@@ -1,40 +1,27 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default async function handler(req: Request): Promise<Response> {
+export default async function handler(req: any, res: any) {
   try {
     if (req.method !== 'POST') {
-      return new Response(
-        JSON.stringify({ error: 'Only POST requests are allowed' }),
-        {
-          status: 405,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return res.status(405).json({
+        error: 'Only POST requests are allowed',
+      });
     }
 
-    const body = await req.json();
-    const prompt = body?.prompt;
+    const prompt = req.body?.prompt;
 
     if (!prompt || typeof prompt !== 'string') {
-      return new Response(
-        JSON.stringify({ error: 'prompt is required' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return res.status(400).json({
+        error: 'prompt is required',
+      });
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'GEMINI_API_KEY is not configured' }),
-        {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return res.status(500).json({
+        error: 'GEMINI_API_KEY is not configured',
+      });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -46,22 +33,14 @@ export default async function handler(req: Request): Promise<Response> {
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    return new Response(
-      JSON.stringify({ text }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return res.status(200).json({
+      text,
+    });
   } catch (error) {
     console.error('Gemini error:', error);
 
-    return new Response(
-      JSON.stringify({ error: 'Gemini request failed' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return res.status(500).json({
+      error: 'Gemini request failed',
+    });
   }
 }
