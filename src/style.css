@@ -365,18 +365,164 @@ nav a:hover {
   border-radius: 9px;
   cursor: pointer;
 }
+/* Responsive Design */
 
 @media (max-width: 900px) {
   .sidebar {
-    width: 190px;
+    width: 200px;
   }
 
   .main {
-    margin-left: 190px;
+    margin-left: 200px;
     padding: 25px;
   }
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .logo {
+    margin-bottom: 15px;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  nav a {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .main {
+    margin-left: 0;
+    padding: 20px 15px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .topbar h1 {
+    font-size: 25px;
+  }
+
+  .topbar .create-btn {
+    width: 100%;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-card strong {
+    font-size: 22px;
+  }
+
+  .workspace {
+    padding: 15px;
+    min-height: auto;
+  }
+
+  .workspace-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .workspace-header input {
+    width: 100%;
+  }
+
+  .empty-state {
+    padding: 45px 10px;
+  }
+
+  .workflow-title {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .run-top {
+    width: 100%;
+  }
+
+  .canvas {
+    padding: 20px 10px;
+    min-height: auto;
+  }
+
+  .node {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .prompt-panel {
+    width: 100%;
+  }
+
+  .run-btn {
+    width: 100%;
+  }
+
+  .modal-box {
+    width: calc(100% - 30px);
+    max-width: 430px;
+    padding: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar h1 {
+    font-size: 22px;
+  }
+
+  .workspace {
+    border-radius: 10px;
+  }
+
+  .node {
+    max-width: 100%;
+  }
+
+  .canvas {
+    padding: 15px 5px;
+  }
+
+  .prompt-panel textarea {
+    min-height: 130px;
+  }
+
+  .modal-box {
+    width: calc(100% - 20px);
+    padding: 18px;
   }
 }
