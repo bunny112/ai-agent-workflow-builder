@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+﻿import { Request, Response } from 'express';
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -48,7 +48,7 @@ export default async function handler(req: Request, res: Response) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('Gemini API error:', data);
+      console.error('Gemini API error:', JSON.stringify(data));
 
       return res.status(response.status).json({
         error: 'Gemini API error',
