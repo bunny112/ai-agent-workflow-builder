@@ -1,0 +1,300 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f6f7fb;
+  color: #171923;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #111827;
+  color: white;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 30px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #6366f1;
+  font-weight: 800;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.logo span {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+nav a {
+  padding: 12px 14px;
+  border-radius: 9px;
+  color: #cbd5e1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+nav a:hover,
+nav a.active {
+  background: #272f43;
+  color: white;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.usage {
+  background: #1f2937;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.usage span,
+.usage strong {
+  display: block;
+}
+
+.usage span {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.usage strong {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.progress {
+  height: 5px;
+  background: #374151;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.progress div {
+  width: 0%;
+  height: 100%;
+  background: #6366f1;
+  border-radius: 10px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #6366f1;
+  font-weight: bold;
+}
+
+.user strong,
+.user small {
+  display: block;
+}
+
+.user strong {
+  font-size: 13px;
+}
+
+.user small {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.main {
+  flex: 1;
+  padding: 35px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.topbar p {
+  margin-top: 7px;
+  color: #6b7280;
+}
+
+.create-btn {
+  border: none;
+  background: #6366f1;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create-btn:hover {
+  background: #4f46e5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.stat-card span {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+}
+
+.workspace {
+  background: white;
+  margin-top: 25px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  min-height: 450px;
+}
+
+.workspace-header {
+  padding: 22px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workspace-header h2 {
+  margin: 0;
+}
+
+.workspace-header p {
+  margin-bottom: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.workspace-header input {
+  width: 220px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-icon {
+  font-size: 50px;
+}
+
+.empty-state h2 {
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    padding: 20px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .workspace-header input {
+    width: 100%;
+  }
+}
