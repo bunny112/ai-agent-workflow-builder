@@ -1,10 +1,10 @@
-﻿import { Request, Response } from 'express';
+﻿import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default async function handler(req: Request, res: Response) {
+export default async function handler(req: any, res: any) {
   try {
     if (req.method !== 'POST') {
       return res.status(405).json({
-        error: 'Only POST requests are allowed',
+        error: 'Only POST requests are allowed'
       });
     }
 
@@ -12,7 +12,7 @@ export default async function handler(req: Request, res: Response) {
 
     if (!prompt || typeof prompt !== 'string') {
       return res.status(400).json({
-        error: 'prompt is required',
+        error: 'prompt is required'
       });
     }
 
@@ -20,54 +20,30 @@ export default async function handler(req: Request, res: Response) {
 
     if (!apiKey) {
       return res.status(500).json({
-        error: 'GEMINI_API_KEY is not configured',
+        error: 'GEMINI_API_KEY is not configured'
       });
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: prompt,
-                },
-              ],
-            },
-          ],
-        }),
-      }
-    );
+    const genAI = new GoogleGenerativeAI(apiKey);
 
-    const data = await response.json();
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-3.5-flash'
+    });
 
-    if (!response.ok) {
-      console.error('Gemini API error:', JSON.stringify(data));
+    const result = await model.generateContent(prompt);
 
-      return res.status(response.status).json({
-        error: 'Gemini API error',
-        details: data,
-      });
-    }
-
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const text = result.response.text();
 
     return res.status(200).json({
-      text,
+      text
     });
+
   } catch (error: any) {
-    console.error('Function error:', error);
+    console.error('Gemini error:', error);
 
     return res.status(500).json({
-      error: 'Function failed',
-      details: error?.message || String(error),
+      error: 'Gemini request failed',
+      details: error?.message || String(error)
     });
   }
 }
